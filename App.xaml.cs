@@ -214,7 +214,15 @@ public partial class App : System.Windows.Application
                 }
             }
 
-            // 7. Live GoogleTranslateService checks
+            // 7. GoogleTranslateService parser & live failover/cache checks
+            var parsedAuto = GoogleTranslateService.ParseTranslateAT("[[\"สวัสดี\\nโลก\",\"en\"]]", "Hello\nworld", "auto", "th");
+            Check("ParseTranslateAT auto-detect shape",
+                parsedAuto.TranslatedText == "สวัสดี\nโลก" && parsedAuto.SourceLang == "en");
+
+            var parsedExplicit = GoogleTranslateService.ParseTranslateAT("[\"Hello\\nWorld\"]", "สวัสดี\nโลก", "th", "en");
+            Check("ParseTranslateAT explicit-lang shape",
+                parsedExplicit.TranslatedText == "Hello\nWorld" && parsedExplicit.SourceLang == "th");
+
             var translateSvc = new GoogleTranslateService();
 
             var thToEn = await translateSvc.TranslateAsync("สวัสดีชาวโลก วันนี้อากาศดีมาก", "th", "en");
@@ -222,6 +230,10 @@ public partial class App : System.Windows.Application
                 !string.IsNullOrWhiteSpace(thToEn.TranslatedText) &&
                 thToEn.TranslatedText.Any(c => (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')),
                 thToEn.TranslatedText);
+
+            var thToEnCached = await translateSvc.TranslateAsync("สวัสดีชาวโลก วันนี้อากาศดีมาก", "th", "en");
+            Check("GoogleTranslateService cache hit",
+                ReferenceEquals(thToEn, thToEnCached));
 
             var enToTh = await translateSvc.TranslateAsync("Hello world, today the weather is very nice.", "auto", "th");
             Check("GoogleTranslateService EN -> TH",
