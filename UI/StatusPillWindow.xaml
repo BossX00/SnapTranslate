@@ -1,0 +1,36 @@
+<Window x:Class="SnapTranslate.UI.StatusPillWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ShowActivated="False"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+    <Border Margin="8"
+            Padding="12,7"
+            CornerRadius="16"
+            Background="#EE1E1E26"
+            BorderBrush="#3A3A4A"
+            BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="14" ShadowDepth="2" Opacity="0.45" />
+        </Border.Effect>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+            <Ellipse x:Name="StatusDot"
+                     Width="8"
+                     Height="8"
+                     Margin="0,0,8,0"
+                     VerticalAlignment="Center"
+                     Fill="#3B82F6" />
+            <TextBlock x:Name="MessageText"
+                       Foreground="#F4F4F8"
+                       FontFamily="Segoe UI, Leelawadee UI"
+                       FontSize="12.5"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center" />
+        </StackPanel>
+    </Border>
+</Window>

@@ -1,0 +1,9 @@
+# .NET / Visual Studio build outputs
+bin/
+obj/
+dist/
+.vs/
+*.user
+*.suo
+*.log
+self_test_report.txt
